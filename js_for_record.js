@@ -1,12 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 从 localStorage 中获取投票信息
     let vote_info = JSON.parse(localStorage.getItem("votes"));
 
-    // 检查 vote_info 是否存在且是对象
     if (vote_info && typeof vote_info === 'object') {
         for (let id in vote_info) {
             if (Array.isArray(vote_info[id].times) && vote_info[id].times.length > 0) {
-                // 遍历 times 数组，并为每个时间调用 generate() 函数
                 vote_info[id].times.forEach(time => {
                     generate(id, time);
                 });
@@ -44,20 +41,15 @@ function generate(id, time) {
     `;
     document.querySelector('.your_vote_record').appendChild(voteDiv);
     
-    // 给删除按钮添加点击事件监听器
     voteDiv.querySelector('.delete_info').addEventListener('click', function () {
-        voteDiv.remove();  // 从页面中移除该投票记录
+        voteDiv.remove();  
         
-
-        // 确保 vote_info 存在，且 times 是一个数组
         if (vote_info && Array.isArray(vote_info[id].times)) {
-            // 找到对应的 time 并移除它
             const index = vote_info[id].times.indexOf(time);
             if (index > -1) {
-                vote_info[id].times.splice(index, 1); // 移除 times 数组中的该时间项
+                vote_info[id].times.splice(index, 1); 
             }
 
-            // 更新 localStorage 中的 votes 数据
             localStorage.setItem("votes", JSON.stringify(vote_info));
         }
         
